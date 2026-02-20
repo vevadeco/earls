@@ -1,0 +1,128 @@
+{
+  "identity": {
+    "name": "E1",
+    "persona": "The Anti-AI Designer",
+    "mission": "Create a high-conversion, earthy, and trustworthy landscaping funnel that feels organic, not manufactured.",
+    "principles": [
+      "Fusion over Imitation: Mix raw nature with clean typography.",
+      "Emotion First: Evoke the feeling of a fresh morning lawn.",
+      "Content is King: Every section must drive the user to the 'Get Quote' form.",
+      "Negative Space: Let the design breathe like a garden."
+    ]
+  },
+  "theme": {
+    "mode": "light",
+    "style": "organic_earthy",
+    "emotional_archetype": "ARCHETYPE 1: ORGANIC & EARTHY"
+  },
+  "colors": {
+    "primary": "#2F5233",
+    "primary_foreground": "#FFFFFF",
+    "secondary": "#B1D8B7",
+    "secondary_foreground": "#1A3320",
+    "accent": "#D2691E",
+    "accent_foreground": "#FFFFFF",
+    "background": "#F9F7F2",
+    "foreground": "#2C2C2C",
+    "card": "#FFFFFF",
+    "card_foreground": "#2C2C2C",
+    "muted": "#E8E6DE",
+    "muted_foreground": "#6B7280",
+    "border": "#D1D5DB",
+    "ring": "#2F5233"
+  },
+  "typography": {
+    "font_family_heading": "DM Serif Display, serif",
+    "font_family_body": "Outfit, sans-serif",
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]",
+      "h2": "text-4xl md:text-5xl font-semibold tracking-tight",
+      "h3": "text-2xl md:text-3xl font-medium",
+      "body": "text-lg leading-relaxed text-muted-foreground"
+    },
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap');"
+    ]
+  },
+  "layout_strategy": {
+    "grid_system": "Bento Grid (Mode A)",
+    "spacing": "Generous (p-8 to p-24)",
+    "container_width": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "border_radius": "rounded-2xl"
+  },
+  "components": {
+    "hero": {
+      "type": "split_screen_with_form",
+      "description": "Left: Strong value prop + Trust badges. Right: High-conversion lead capture form.",
+      "visuals": "Background image with slight overlay to ensure text readability.",
+      "form_position": "prominent_right_or_center"
+    },
+    "services": {
+      "type": "bento_grid",
+      "items": [
+        {
+          "title": "Lawn Care & Maintenance",
+          "span": "col-span-1 md:col-span-2 row-span-2",
+          "image": "https://images.pexels.com/photos/4920283/pexels-photo-4920283.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        },
+        {
+          "title": "Garden Planting",
+          "span": "col-span-1 md:col-span-1 row-span-1",
+          "image": "https://images.unsplash.com/photo-1764790672950-0c9927c04e04?crop=entropy&cs=srgb&fm=jpg&q=85"
+        },
+        {
+          "title": "Hardscaping & Patios",
+          "span": "col-span-1 md:col-span-1 row-span-1",
+          "image": "https://images.pexels.com/photos/6313939/pexels-photo-6313939.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        }
+      ]
+    },
+    "testimonials": {
+      "type": "carousel",
+      "rating": "4.8 Stars",
+      "style": "card_with_avatar"
+    },
+    "map": {
+      "type": "static_image_with_overlay",
+      "location": "Hamilton & GTA",
+      "style": "custom_styled_map_light_theme"
+    },
+    "lead_form": {
+      "fields": ["name", "email", "phone", "service_type"],
+      "validation": "zod",
+      "submit_action": "POST to /api/leads",
+      "style": "high_contrast_card"
+    }
+  },
+  "assets": {
+    "images": {
+      "hero_bg": "https://images.unsplash.com/photo-1646186068056-c4f51dcc7923?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "lawn_care": "https://images.pexels.com/photos/4920283/pexels-photo-4920283.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "hardscaping": "https://images.pexels.com/photos/6313939/pexels-photo-6313939.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "planting": "https://images.unsplash.com/photo-1764790672950-0c9927c04e04?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "map_placeholder": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000"
+    },
+    "icons": "lucide-react"
+  },
+  "visual_enhancers": {
+    "texture": "Subtle noise overlay on the background color to give it a 'paper' feel.",
+    "shadows": "shadow-xl for the form, shadow-sm for service cards.",
+    "animations": "Framer Motion: Fade in up for text, stagger children for lists."
+  },
+  "universal_guidelines": [
+    "Do not use gradients for the main background. Use solid #F9F7F2 with noise.",
+    "Ensure the 'Get Quote' button is always visible or easily accessible (sticky nav).",
+    "Use 2-3x more padding than usual. Let the design breathe.",
+    "Do not use generic 'AI' emojis. Use Lucide icons.",
+    "Ensure mobile responsiveness is priority #1.",
+    "All interactive elements must have data-testid attributes."
+  ],
+  "instructions_to_main_agent": [
+    "1. Setup Tailwind config with the provided colors and fonts.",
+    "2. Create the Lead Capture Form component using Shadcn Form + Zod.",
+    "3. Build the Landing Page with: Hero (Form), Services (Bento), Testimonials, Map, Footer.",
+    "4. Connect the form to a FastAPI endpoint that saves to MongoDB.",
+    "5. Use the provided image URLs for the respective sections.",
+    "6. Ensure the map section clearly labels 'Hamilton & GTA'."
+  ]
+}
