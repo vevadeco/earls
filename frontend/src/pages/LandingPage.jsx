@@ -12,10 +12,21 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const LandingPage = () => {
-  const [showPromo, setShowPromo] = useState(true);
+  const [showPromo, setShowPromo] = useState(false);
+  const [promoSettings, setPromoSettings] = useState(null);
 
-  // Track page view on mount
+  // Fetch promo settings and track page view on mount
   useEffect(() => {
+    const fetchPromoSettings = async () => {
+      try {
+        const response = await axios.get(`${API}/promo-banner`);
+        setPromoSettings(response.data);
+        setShowPromo(response.data.enabled);
+      } catch (e) {
+        console.error("Failed to fetch promo settings:", e);
+      }
+    };
+
     const trackPageView = async () => {
       try {
         let sessionId = sessionStorage.getItem("session_id");
@@ -34,6 +45,7 @@ const LandingPage = () => {
       }
     };
 
+    fetchPromoSettings();
     trackPageView();
   }, []);
 
@@ -46,7 +58,12 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-background noise-bg" data-testid="landing-page">
-      {showPromo && <PromoBanner onClose={() => setShowPromo(false)} />}
+      {showPromo && promoSettings && (
+        <PromoBanner 
+          settings={promoSettings} 
+          onClose={() => setShowPromo(false)} 
+        />
+      )}
       <Navbar onGetQuote={scrollToForm} hasPromo={showPromo} />
       <main>
         <HeroSection />
