@@ -40,7 +40,7 @@ class StatusCheckCreate(BaseModel):
 # Lead Models
 class LeadCreate(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
-    email: str = Field(..., min_length=5, max_length=100)
+    email: EmailStr = Field(..., min_length=5, max_length=100)
     phone: str = Field(..., min_length=7, max_length=20)
     service_type: str = Field(..., min_length=1)
 
