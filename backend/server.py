@@ -119,6 +119,25 @@ class AnalyticsSummary(BaseModel):
     top_pages: List[dict]
     daily_stats: List[dict]
 
+# Promo Banner Models
+class PromoBannerSettings(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    enabled: bool = True
+    title: str = "Spring Cleanup Special - 15% OFF!"
+    subtitle: str = "Book by March 1st to save on your spring landscaping"
+    discount_text: str = "15% OFF"
+    cta_text: str = "Claim Offer"
+    deadline_date: str = "2026-03-01"  # ISO format date
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class PromoBannerUpdate(BaseModel):
+    enabled: Optional[bool] = None
+    title: Optional[str] = None
+    subtitle: Optional[str] = None
+    discount_text: Optional[str] = None
+    cta_text: Optional[str] = None
+    deadline_date: Optional[str] = None
+
 # ============== AUTH HELPERS ==============
 
 def create_token(username: str) -> str:
