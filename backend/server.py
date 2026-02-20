@@ -455,6 +455,61 @@ async def export_leads(username: str = Depends(verify_token)):
     
     return {"csv": "\n".join(csv_lines), "filename": f"leads_export_{datetime.now().strftime('%Y%m%d')}.csv"}
 
+# ============== PROMO BANNER ROUTES ==============
+
+# Default promo banner settings
+DEFAULT_PROMO_SETTINGS = {
+    "enabled": True,
+    "title": "Spring Cleanup Special - 15% OFF!",
+    "subtitle": "Book by March 1st to save on your spring landscaping",
+    "discount_text": "15% OFF",
+    "cta_text": "Claim Offer",
+    "deadline_date": "2026-03-01"
+}
+
+@api_router.get("/promo-banner")
+async def get_promo_banner():
+    """Get promo banner settings (public endpoint)"""
+    settings = await db.promo_settings.find_one({}, {"_id": 0})
+    if not settings:
+        return DEFAULT_PROMO_SETTINGS
+    return settings
+
+@api_router.get("/admin/promo-banner", response_model=PromoBannerSettings)
+async def get_admin_promo_banner(username: str = Depends(verify_token)):
+    """Get promo banner settings (admin)"""
+    settings = await db.promo_settings.find_one({}, {"_id": 0})
+    if not settings:
+        # Initialize with defaults
+        settings = {**DEFAULT_PROMO_SETTINGS, "updated_at": datetime.now(timezone.utc).isoformat()}
+        await db.promo_settings.insert_one(settings)
+    if isinstance(settings.get('updated_at'), str):
+        settings['updated_at'] = datetime.fromisoformat(settings['updated_at'])
+    return PromoBannerSettings(**settings)
+
+@api_router.put("/admin/promo-banner")
+async def update_promo_banner(update: PromoBannerUpdate, username: str = Depends(verify_token)):
+    """Update promo banner settings"""
+    # Get current settings or defaults
+    current = await db.promo_settings.find_one({}, {"_id": 0})
+    if not current:
+        current = DEFAULT_PROMO_SETTINGS.copy()
+    
+    # Update only provided fields
+    update_data = {k: v for k, v in update.model_dump().items() if v is not None}
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    
+    current.update(update_data)
+    
+    # Upsert the settings
+    await db.promo_settings.update_one(
+        {},
+        {"$set": current},
+        upsert=True
+    )
+    
+    return {"success": True, "message": "Promo banner updated", "settings": current}
+
 # Include the router
 app.include_router(api_router)
 
