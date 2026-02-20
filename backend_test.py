@@ -363,7 +363,16 @@ def main():
         tester.test_get_leads,
         tester.test_status_check_create,
         tester.test_status_check_get,
-        tester.test_various_service_types
+        tester.test_various_service_types,
+        # New authentication and admin tests
+        tester.test_admin_login_invalid,
+        tester.test_unauthorized_access,
+        tester.test_admin_login_valid,  # This must come before protected route tests
+        tester.test_auth_verify,
+        tester.test_pageview_tracking,
+        tester.test_admin_analytics,
+        tester.test_admin_get_leads,
+        tester.test_export_leads
     ]
     
     for test in tests:
