@@ -209,6 +209,143 @@ class EarlsLandscapingAPITester:
         
         return all(results)
 
+    def test_admin_login_valid(self):
+        """Test admin login with valid credentials"""
+        test_data = {
+            "username": "shahbaz",
+            "password": "Shaherzad123!"
+        }
+        
+        success, response = self.run_test(
+            "Admin Login (Valid Credentials)",
+            "POST",
+            "auth/login",
+            200,
+            data=test_data
+        )
+        
+        if success and response.get("token"):
+            self.admin_token = response["token"]
+            print(f"   Token acquired: {self.admin_token[:20]}...")
+        
+        return success
+
+    def test_admin_login_invalid(self):
+        """Test admin login with invalid credentials"""
+        test_data = {
+            "username": "wrong",
+            "password": "wrongpassword"
+        }
+        
+        return self.run_test(
+            "Admin Login (Invalid Credentials)",
+            "POST",
+            "auth/login",
+            401,
+            data=test_data
+        )
+
+    def test_auth_verify(self):
+        """Test auth verification with valid token"""
+        if not self.admin_token:
+            print("❌ No admin token available for auth verification test")
+            return False
+            
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {self.admin_token}'
+        }
+        
+        return self.run_test(
+            "Auth Verification",
+            "GET",
+            "auth/verify",
+            200,
+            headers=headers
+        )
+
+    def test_pageview_tracking(self):
+        """Test analytics pageview tracking"""
+        test_data = {
+            "page": "/",
+            "referrer": "https://google.com",
+            "session_id": f"test_session_{datetime.now().timestamp()}"
+        }
+        
+        return self.run_test(
+            "Analytics Pageview Tracking",
+            "POST",
+            "analytics/pageview",
+            200,
+            data=test_data
+        )
+
+    def test_admin_analytics(self):
+        """Test admin analytics endpoint"""
+        if not self.admin_token:
+            print("❌ No admin token available for analytics test")
+            return False
+            
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {self.admin_token}'
+        }
+        
+        return self.run_test(
+            "Admin Analytics",
+            "GET",
+            "admin/analytics",
+            200,
+            headers=headers
+        )
+
+    def test_admin_get_leads(self):
+        """Test admin get leads endpoint"""
+        if not self.admin_token:
+            print("❌ No admin token available for admin leads test")
+            return False
+            
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {self.admin_token}'
+        }
+        
+        return self.run_test(
+            "Admin Get Leads",
+            "GET",
+            "admin/leads",
+            200,
+            headers=headers
+        )
+
+    def test_export_leads(self):
+        """Test leads export functionality"""
+        if not self.admin_token:
+            print("❌ No admin token available for export test")
+            return False
+            
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {self.admin_token}'
+        }
+        
+        return self.run_test(
+            "Export Leads CSV",
+            "GET",
+            "admin/leads/export",
+            200,
+            headers=headers
+        )
+
+    def test_unauthorized_access(self):
+        """Test that protected routes require authentication"""
+        return self.run_test(
+            "Unauthorized Access to Admin Routes",
+            "GET",
+            "admin/leads",
+            401  # Should return 401 without token
+        )
+
 def main():
     """Main test runner"""
     print("🚀 Starting Earl's Landscaping API Tests")
