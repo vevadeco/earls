@@ -22,9 +22,9 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
 
   return (
     <nav
-      className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
-        hasPromo ? "top-[108px] md:top-[52px]" : "top-0"
-      } ${isScrolled ? "nav-sticky shadow-sm" : "bg-transparent"}`}
+      className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
+        hasPromo ? "top-[88px] md:top-[44px]" : "top-0"
+      } bg-white/95 backdrop-blur-sm shadow-sm`}
       data-testid="navbar"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
