@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Leaf } from "lucide-react";
 
-const Navbar = ({ onGetQuote }) => {
+const Navbar = ({ onGetQuote, hasPromo = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -22,9 +22,9 @@ const Navbar = ({ onGetQuote }) => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "nav-sticky shadow-sm" : "bg-transparent"
-      }`}
+      className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
+        hasPromo ? "top-[108px] md:top-[52px]" : "top-0"
+      } ${isScrolled ? "nav-sticky shadow-sm" : "bg-transparent"}`}
       data-testid="navbar"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
