@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, Clock, Percent } from "lucide-react";
 
-const PromoBanner = ({ onClose }) => {
+const PromoBanner = ({ settings, onClose }) => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -10,10 +10,14 @@ const PromoBanner = ({ onClose }) => {
   });
 
   useEffect(() => {
-    // Set deadline to March 1st of the current or next year
+    // Parse deadline from settings
     const getDeadline = () => {
+      if (settings?.deadline_date) {
+        return new Date(settings.deadline_date);
+      }
+      // Default: March 1st of current or next year
       const now = new Date();
-      let deadline = new Date(now.getFullYear(), 2, 1); // March 1st
+      let deadline = new Date(now.getFullYear(), 2, 1);
       if (now > deadline) {
         deadline = new Date(now.getFullYear() + 1, 2, 1);
       }
@@ -40,7 +44,7 @@ const PromoBanner = ({ onClose }) => {
     const timer = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [settings?.deadline_date]);
 
   const TimeBlock = ({ value, label }) => (
     <div className="flex flex-col items-center">
@@ -54,6 +58,11 @@ const PromoBanner = ({ onClose }) => {
       </span>
     </div>
   );
+
+  // Use settings or defaults
+  const title = settings?.title || "Spring Cleanup Special - 15% OFF!";
+  const subtitle = settings?.subtitle || "Book by March 1st to save on your spring landscaping";
+  const ctaText = settings?.cta_text || "Claim Offer";
 
   return (
     <div
@@ -69,10 +78,10 @@ const PromoBanner = ({ onClose }) => {
             </div>
             <div>
               <p className="font-body font-bold text-white text-xs sm:text-sm">
-                Spring Cleanup Special - 15% OFF!
+                {title}
               </p>
               <p className="font-body text-white/90 text-[10px] sm:text-xs">
-                Book by March 1st to save on your spring landscaping
+                {subtitle}
               </p>
             </div>
           </div>
@@ -98,7 +107,7 @@ const PromoBanner = ({ onClose }) => {
               className="hidden sm:inline-flex items-center px-3 py-1 bg-white text-accent font-body font-semibold text-xs rounded-full hover:bg-white/90 transition-colors"
               data-testid="promo-cta-btn"
             >
-              Claim Offer
+              {ctaText}
             </a>
             <button
               onClick={onClose}
