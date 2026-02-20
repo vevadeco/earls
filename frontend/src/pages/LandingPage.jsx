@@ -1,13 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ServiceAreaSection from "@/components/ServiceAreaSection";
 import Footer from "@/components/Footer";
+import PromoBanner from "@/components/PromoBanner";
+import axios from "axios";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const LandingPage = () => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [showPromo, setShowPromo] = useState(true);
+
+  // Track page view on mount
+  useEffect(() => {
+    const trackPageView = async () => {
+      try {
+        let sessionId = sessionStorage.getItem("session_id");
+        if (!sessionId) {
+          sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+          sessionStorage.setItem("session_id", sessionId);
+        }
+
+        await axios.post(`${API}/analytics/pageview`, {
+          page: window.location.pathname,
+          referrer: document.referrer || null,
+          session_id: sessionId,
+        });
+      } catch (e) {
+        console.error("Failed to track pageview:", e);
+      }
+    };
+
+    trackPageView();
+  }, []);
 
   const scrollToForm = () => {
     const heroSection = document.getElementById("hero");
@@ -18,7 +46,8 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-background noise-bg" data-testid="landing-page">
-      <Navbar onGetQuote={scrollToForm} />
+      {showPromo && <PromoBanner onClose={() => setShowPromo(false)} />}
+      <Navbar onGetQuote={scrollToForm} hasPromo={showPromo} />
       <main>
         <HeroSection />
         <ServicesSection onGetQuote={scrollToForm} />
