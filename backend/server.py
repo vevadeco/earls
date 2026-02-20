@@ -64,7 +64,7 @@ class StatusCheckCreate(BaseModel):
 
 class LeadCreate(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
-    email: str = Field(..., min_length=5, max_length=100)
+    email: str = Field(..., min_length=5, max_length=100, pattern=r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
     phone: str = Field(..., min_length=7, max_length=20)
     service_type: str = Field(..., min_length=1)
 
