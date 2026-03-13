@@ -22,15 +22,5 @@
       "src": "/(.*)",
       "dest": "frontend/build/$1"
     }
-  ],
-  "env": {
-    "MONGO_URL": "@mongo_url",
-    "DB_NAME": "@db_name",
-    "RESEND_API_KEY": "@resend_api_key",
-    "JWT_SECRET": "@jwt_secret",
-    "SENDER_EMAIL": "@sender_email",
-    "NOTIFICATION_EMAILS": "@notification_emails",
-    "ADMIN_USERNAME": "@admin_username",
-    "ADMIN_PASSWORD": "@admin_password"
-  }
+  ]
 }
