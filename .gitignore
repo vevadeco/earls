@@ -78,6 +78,10 @@ agenthub/agents/youtube/db
 
 # Mobile development
 android-sdk/ -e 
-# Environment files
-*.env
-*.env.*
+# Environment files (private - don't commit real secrets)
+.env
+.env.local
+.env.production
+
+# Allow example template
+!.env.example
