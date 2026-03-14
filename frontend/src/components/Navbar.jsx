@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Leaf } from "lucide-react";
 
 const Navbar = ({ onGetQuote, hasPromo = false }) => {
+  // eslint-disable-next-line no-unused-vars
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -30,7 +31,7 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2" data-testid="logo">
+          <a href="/" className="flex items-center gap-2" data-testid="logo">
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
               <Leaf className="w-5 h-5 text-primary-foreground" />
             </div>
