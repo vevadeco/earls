@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import PromoBanner from "@/components/PromoBanner";
 import axios from "axios";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 const LandingPage = () => {
