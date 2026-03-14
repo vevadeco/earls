@@ -1,11 +1,12 @@
 {
   "version": 2,
+  "outputDirectory": "frontend/build",
   "builds": [
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "frontend/build"
+        "distDir": "build"
       }
     },
     {
@@ -19,12 +20,8 @@
       "dest": "backend/api/index.py"
     },
     {
-      "src": "^/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "^/(.*)",
-      "dest": "/index.html"
+      "src": "/(.*)",
+      "dest": "/frontend/build/$1"
     }
   ]
 }
