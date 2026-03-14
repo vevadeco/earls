@@ -3,9 +3,8 @@ fastapi==0.115.0
 uvicorn==0.32.0
 python-dotenv==1.0.1
 
-# Database
-motor==3.6.0
-pymongo==4.10.1
+# Database - motor includes pymongo automatically
+motor>=3.6.0
 
 # Auth & Security
 pyjwt==2.9.0
