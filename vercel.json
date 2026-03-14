@@ -1,9 +1,6 @@
 {
-  "framework": "create-react-app",
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/backend/api/$1"
-    }
-  ]
+  "version": 2,
+  "buildCommand": null,
+  "outputDirectory": null,
+  "framework": "create-react-app"
 }
