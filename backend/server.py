@@ -35,7 +35,7 @@ JWT_EXPIRATION_HOURS = 24
 
 # Admin credentials
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'shahbaz')
-ADMIN_PASSWORD = 'Shaherzad123!'
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'Shaherzad123!')
 
 # Create the main app
 app = FastAPI()
