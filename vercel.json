@@ -1,33 +1,6 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build"
-    },
-    {
-      "src": "backend/api/index.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "env": {
-    "PYTHONPATH": "./backend"
-  },
-  "routes": [
-    {
-      "src": "/api/",
-      "dest": "backend/api/index.py"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "backend/api/index.py"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "framework": "create-react-app"
 }
