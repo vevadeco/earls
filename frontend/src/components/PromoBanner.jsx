@@ -62,7 +62,6 @@ const PromoBanner = ({ settings, onClose }) => {
   // Use settings or defaults
   const title = settings?.title || "Spring Cleanup Special - 15% OFF!";
   const subtitle = settings?.subtitle || "Book by March 1st to save on your spring landscaping";
-  const ctaText = settings?.cta_text || "Claim Offer";
 
   return (
     <div
